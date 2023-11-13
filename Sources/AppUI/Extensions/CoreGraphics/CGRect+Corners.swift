@@ -5,6 +5,7 @@
 //  Created by Mark DiFranco on 2023-11-10.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public extension CGRect {
@@ -25,3 +26,4 @@ public extension CGRect {
         .init(x: 0, y: height)
     }
 }
+#endif

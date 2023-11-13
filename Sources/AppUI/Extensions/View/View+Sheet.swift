@@ -15,9 +15,11 @@ public extension View {
         }
     }
 
+    #if os(iOS)
     func fullScreenCover(_ view: Binding<AnyView?>) -> some View {
         fullScreenCover(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
             view.wrappedValue
         }
     }
+    #endif
 }

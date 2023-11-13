@@ -5,6 +5,7 @@
 //  Created by Mark DiFranco on 2023-11-10.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public extension CGSize {
@@ -13,3 +14,4 @@ public extension CGSize {
         width / height
     }
 }
+#endif
