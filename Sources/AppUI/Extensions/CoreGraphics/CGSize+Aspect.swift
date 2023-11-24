@@ -13,5 +13,9 @@ public extension CGSize {
     var aspectRatio: CGFloat {
         width / height
     }
+
+    var transposed: CGSize {
+        CGSize(width: height, height: width)
+    }
 }
 #endif
