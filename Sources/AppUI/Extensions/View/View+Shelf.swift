@@ -39,6 +39,6 @@ public extension View {
         Text("4")
     }
     .shelf {
-        ProminentButton(title: "Create") { }
+        ProminentButton("Create") { }
     }
 }

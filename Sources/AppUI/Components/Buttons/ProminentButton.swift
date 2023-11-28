@@ -9,17 +9,33 @@ import SwiftUI
 
 public struct ProminentButton: View {
     let title: String
+    let systemImage: String?
     let role: ButtonRole?
     let isLoading: Bool
     let action: () -> Void
 
     public init(
-        title: String,
+        _ title: String,
         role: ButtonRole? = nil,
         isLoading: Bool = false,
         action: @escaping () -> Void
     ) {
         self.title = title
+        self.systemImage = nil
+        self.role = role
+        self.isLoading = isLoading
+        self.action = action
+    }
+
+    public init(
+        _ title: String,
+        systemImage: String,
+        role: ButtonRole? = nil,
+        isLoading: Bool = false,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.systemImage = systemImage
         self.role = role
         self.isLoading = isLoading
         self.action = action
@@ -31,14 +47,16 @@ public struct ProminentButton: View {
                 Spacer()
                 if isLoading {
                     CircularSpinnerView()
-                        .padding(6)
+                } else if let systemImage {
+                    Label(title, systemImage: systemImage)
+                        .labelStyle(.titleAndIcon)
                 } else {
                     Text(title)
-                        .bold()
-                        .padding(6)
                 }
                 Spacer()
             }
+            .bold()
+            .padding(6)
         }
         .buttonStyle(.borderedProminent)
         .allowsHitTesting(!isLoading)
@@ -47,14 +65,21 @@ public struct ProminentButton: View {
 
 #Preview {
     List {
-        ProminentButton(title: "Start Game") {
+        ProminentButton("Start Game") {
             print("Hey")
         }
-        .padding()
 
-        ProminentButton(title: "Start Game", isLoading: true) {
+        ProminentButton("Start Game", isLoading: true) {
             print("Hey")
         }
-        .padding()
+
+        ProminentButton(
+            "Start Game",
+            systemImage: "plus"
+        ) {
+            print("Hey")
+        }
+        .tint(.red)
+        .foregroundStyle(.black)
     }
 }
