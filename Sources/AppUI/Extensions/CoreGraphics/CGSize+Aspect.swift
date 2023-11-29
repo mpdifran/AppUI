@@ -5,8 +5,8 @@
 //  Created by Mark DiFranco on 2023-11-10.
 //
 
-#if canImport(UIKit)
-import UIKit
+#if canImport(CoreGraphics)
+import CoreGraphics
 
 public extension CGSize {
 
