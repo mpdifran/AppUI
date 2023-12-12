@@ -10,15 +10,26 @@ import SwiftUI
 public struct AlertDetails {
     let title: String
     let message: String?
+    let onDismiss: () -> Void
 
-    public init(title: String, message: String?) {
+    public init(
+        title: String,
+        message: String?,
+        onDismiss: @escaping () -> Void = { }
+    ) {
         self.title = title
         self.message = message
+        self.onDismiss = onDismiss
     }
 
-    public init(error: Error) {
-        self.title = "Oops"
+    public init(
+        title: String? = nil,
+        error: Error,
+        onDismiss: @escaping () -> Void = { }
+    ) {
+        self.title = title ?? "Oops"
         self.message = error.localizedDescription
+        self.onDismiss = onDismiss
     }
 }
 
@@ -66,7 +77,9 @@ public extension View {
 
     func alert(alertDetails: Binding<AlertDetails?>) -> some View {
         return alert(alertDetails.wrappedValue?.title ?? "", isPresented: Binding(isNotNil: alertDetails)) {
-            Button("OK") { }
+            Button("OK") {
+                alertDetails.wrappedValue?.onDismiss()
+            }
         } message: {
             if let message = alertDetails.wrappedValue?.message {
                 Text(message)
