@@ -10,10 +10,12 @@ import SwiftUI
 public extension View {
 
     func `if`<Content: View>(_ condition: Bool, content: (Self) -> Content) -> some View {
-        if condition {
-            return AnyView(content(self))
-        } else {
-            return AnyView(self)
+        Group {
+            if condition {
+                content(self)
+            } else {
+                self
+            }
         }
     }
 }
