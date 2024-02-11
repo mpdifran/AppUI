@@ -26,4 +26,11 @@ public extension View {
         }
         #endif
     }
+
+    /// Presents the view as a popover.
+    func popover(_ view: Binding<AnyView?>) -> some View {
+        popover(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
+            view.wrappedValue
+        }
+    }
 }
