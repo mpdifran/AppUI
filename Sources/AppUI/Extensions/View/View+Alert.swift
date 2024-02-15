@@ -10,15 +10,18 @@ import SwiftUI
 public struct AlertDetails {
     let title: String
     let message: String?
+    public let buttons: [Button]
     let onDismiss: () -> Void
 
     public init(
         title: String,
         message: String?,
+        buttons: [Button] = [],
         onDismiss: @escaping () -> Void = { }
     ) {
         self.title = title
         self.message = message
+        self.buttons = buttons
         self.onDismiss = onDismiss
     }
 
@@ -27,9 +30,25 @@ public struct AlertDetails {
         error: Error,
         onDismiss: @escaping () -> Void = { }
     ) {
-        self.title = title ?? "Oops"
+        self.title = title ?? "Error"
         self.message = error.localizedDescription
+        self.buttons = []
         self.onDismiss = onDismiss
+    }
+}
+
+public extension AlertDetails {
+    struct Button: Identifiable {
+        public let id = UUID()
+        public let title: String
+        public let role: ButtonRole?
+        public let action: () -> Void
+
+        public init(title: String, role: ButtonRole? = nil, action: @escaping () -> Void) {
+            self.title = title
+            self.role = role
+            self.action = action
+        }
     }
 }
 
@@ -59,7 +78,7 @@ public extension View {
     }
 
     func alert(errorAlertDetails: Binding<ErrorAlertDetails?>) -> some View {
-        return alert("Oops", isPresented: Binding(isNotNil: errorAlertDetails)) {
+        return alert("Error", isPresented: Binding(isNotNil: errorAlertDetails)) {
             Button("OK", role: .cancel) {
                 errorAlertDetails.wrappedValue?.onDismiss()
             }
@@ -77,8 +96,17 @@ public extension View {
 
     func alert(alertDetails: Binding<AlertDetails?>) -> some View {
         return alert(alertDetails.wrappedValue?.title ?? "", isPresented: Binding(isNotNil: alertDetails)) {
-            Button("OK") {
-                alertDetails.wrappedValue?.onDismiss()
+            if let buttons = alertDetails.wrappedValue?.buttons, !buttons.isEmpty {
+                ForEach(buttons) { button in
+                    Button(button.title, role: button.role) {
+                        button.action()
+                        alertDetails.wrappedValue?.onDismiss()
+                    }
+                }
+            } else {
+                Button("OK") {
+                    alertDetails.wrappedValue?.onDismiss()
+                }
             }
         } message: {
             if let message = alertDetails.wrappedValue?.message {

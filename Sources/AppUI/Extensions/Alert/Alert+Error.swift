@@ -10,7 +10,7 @@ import SwiftUI
 public extension Alert {
 
     init(error: Error?, onDismiss: @escaping () -> Void = { }) {
-        self.init(title: Text("Oops"),
+        self.init(title: Text("Error"),
                   message: Text(error?.localizedDescription ?? ""),
                   dismissButton: .default(Text("OK"), action: onDismiss))
     }
