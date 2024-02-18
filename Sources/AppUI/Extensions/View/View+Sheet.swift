@@ -33,4 +33,10 @@ public extension View {
             view.wrappedValue
         }
     }
+
+    func navigationDestination(_ view: Binding<AnyView?>) -> some View {
+        navigationDestination(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
+            view.wrappedValue
+        }
+    }
 }
