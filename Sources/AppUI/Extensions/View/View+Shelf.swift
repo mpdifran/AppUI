@@ -15,11 +15,16 @@ struct ViewShelf<ShelfContent: View>: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        VStack(spacing: 0) {
-            content
-            shelfContent
-                .padding()
-        }
+        content
+            .safeAreaInset(edge: .bottom) {
+                shelfContent
+                    .padding()
+                    .background {
+                        Rectangle()
+                            .fill(.bar)
+                            .edgesIgnoringSafeArea(.bottom)
+                    }
+            }
     }
 }
 
@@ -32,13 +37,42 @@ public extension View {
 
 
 #Preview {
-    List {
-        Text("1")
-        Text("2")
-        Text("3")
-        Text("4")
-    }
-    .shelf {
-        ProminentButton("Create") { }
+    NavigationView {
+        List {
+            Text("1")
+            Text("2")
+            Text("3")
+            Text("4")
+            Text("5")
+            Text("6")
+            Text("7")
+            Text("8")
+            Text("9")
+            Text("0")
+            Text("1")
+            Text("2")
+            Text("3")
+            Text("4")
+            Text("5")
+            Text("6")
+            Text("7")
+            Text("8")
+            Text("9")
+            Text("0")
+            Text("1")
+            Text("2")
+            Text("3")
+            Text("4")
+            Text("5")
+            Text("6")
+            Text("7")
+            Text("8")
+            Text("9")
+            Text("0")
+        }
+        .navigationTitle("Preview")
+        .shelf {
+            ProminentButton("Create") { }
+        }
     }
 }
