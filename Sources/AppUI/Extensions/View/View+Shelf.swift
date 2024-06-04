@@ -8,30 +8,37 @@
 import SwiftUI
 
 struct ViewShelf<ShelfContent: View>: ViewModifier {
+    let spacing: CGFloat?
     let shelfContent: ShelfContent
 
-    init(@ViewBuilder shelfContent: () -> ShelfContent) {
+    init(spacing: CGFloat? = nil, @ViewBuilder shelfContent: () -> ShelfContent) {
+        self.spacing = spacing
         self.shelfContent = shelfContent()
     }
 
     func body(content: Content) -> some View {
         content
             .safeAreaInset(edge: .bottom) {
-                shelfContent
-                    .padding()
-                    .background {
-                        Rectangle()
-                            .fill(.bar)
-                            .edgesIgnoringSafeArea(.bottom)
-                    }
+                VStack(spacing: spacing) {
+                    shelfContent
+                }
+                .padding()
+                .background {
+                    Rectangle()
+                        .fill(.bar)
+                        .edgesIgnoringSafeArea(.bottom)
+                }
             }
     }
 }
 
 public extension View {
 
-    func shelf<ShelfContent: View>(@ViewBuilder _ shelfContent: @escaping () -> ShelfContent) -> some View {
-        modifier(ViewShelf(shelfContent: shelfContent))
+    func shelf<ShelfContent: View>(
+        spacing: CGFloat? = nil,
+        @ViewBuilder _ shelfContent: @escaping () -> ShelfContent
+    ) -> some View {
+        modifier(ViewShelf(spacing: spacing, shelfContent: shelfContent))
     }
 }
 
@@ -73,6 +80,7 @@ public extension View {
         .navigationTitle("Preview")
         .shelf {
             ProminentButton("Create") { }
+            ProminentButton("Cancel") { }
         }
     }
 }
