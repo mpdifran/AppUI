@@ -22,6 +22,7 @@ struct ViewShelf<ShelfContent: View>: ViewModifier {
                 VStack(spacing: spacing) {
                     shelfContent
                 }
+                .horizontallyCentered()
                 .padding()
                 .background {
                     Rectangle()
