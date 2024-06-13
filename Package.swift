@@ -6,7 +6,7 @@ let package = Package(
     name: "AppUI",
     platforms: [
         .macOS(.v14),
-        .iOS(.v16),
+        .iOS(.v17),
         .tvOS(.v16),
     ],
     products: [
