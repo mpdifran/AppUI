@@ -39,4 +39,10 @@ public extension View {
             view.wrappedValue
         }
     }
+
+    func inspector(_ view: Binding<AnyView?>) -> some View {
+        inspector(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
+            view.wrappedValue
+        }
+    }
 }
