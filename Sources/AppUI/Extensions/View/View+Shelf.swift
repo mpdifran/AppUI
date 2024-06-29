@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct ViewShelf<ShelfContent: View>: ViewModifier {
-    let spacing: CGFloat?
-    let shelfContent: ShelfContent
+    private let spacing: CGFloat?
+    private let includePadding: Bool
+    private let shelfContent: ShelfContent
 
-    init(spacing: CGFloat? = nil, @ViewBuilder shelfContent: () -> ShelfContent) {
+    init(
+        spacing: CGFloat? = nil,
+        includePadding: Bool = true,
+        @ViewBuilder shelfContent: () -> ShelfContent
+    ) {
         self.spacing = spacing
+        self.includePadding = includePadding
         self.shelfContent = shelfContent()
     }
 
@@ -23,7 +29,9 @@ struct ViewShelf<ShelfContent: View>: ViewModifier {
                     shelfContent
                 }
                 .horizontallyCentered()
-                .padding()
+                .if(includePadding) {
+                    $0.padding()
+                }
                 .background {
                     Rectangle()
                         .fill(.bar)
