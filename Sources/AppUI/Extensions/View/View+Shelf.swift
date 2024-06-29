@@ -45,9 +45,16 @@ public extension View {
 
     func shelf<ShelfContent: View>(
         spacing: CGFloat? = nil,
+        includePadding: Bool = true,
         @ViewBuilder _ shelfContent: @escaping () -> ShelfContent
     ) -> some View {
-        modifier(ViewShelf(spacing: spacing, shelfContent: shelfContent))
+        modifier(
+            ViewShelf(
+                spacing: spacing,
+                includePadding: includePadding,
+                shelfContent: shelfContent
+            )
+        )
     }
 }
 
