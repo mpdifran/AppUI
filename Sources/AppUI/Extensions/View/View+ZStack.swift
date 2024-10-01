@@ -13,7 +13,7 @@ public extension View {
     ///
     /// - parameter alignment: The alignment to use for this view.
     func zStackAlignment(_ alignment: Alignment) -> some View {
-        VStack {
+        VStack(spacing: 0) {
             if alignment == .center ||
                 alignment == .bottom ||
                 alignment == .bottomLeading ||
@@ -21,7 +21,7 @@ public extension View {
                 Spacer(minLength: 0)
             }
 
-            HStack {
+            HStack(spacing: 0) {
                 if alignment == .center ||
                     alignment == .trailing ||
                     alignment == .topTrailing ||
