@@ -46,14 +46,15 @@ private extension TabFilter {
             }
 
             tab.image
+                .frame(square: 22)
                 .symbolVariant(tab == selectedTab ? .fill : .none)
-                .foregroundStyle(tab == selectedTab ? .white : .secondary)
+                .foregroundStyle(tab == selectedTab ? .white : .primary)
                 .transition(.opacity)
 
             if tab == selectedTab {
                 Text(tab.name)
                     .foregroundStyle(.white)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.opacity)
             }
 
             if tab == selectedTab {
@@ -93,7 +94,7 @@ private enum PreviewTab: TabFilterItem {
 
     var systemImage: String {
         switch self {
-        case .main: return "house"
+        case .main: return "fork.knife"
         case .promotions: return "tag"
         case .updates: return "arrow.up.circle"
         case .shopping: return "cart"
@@ -114,4 +115,5 @@ private enum PreviewTab: TabFilterItem {
     @Previewable @State var selectedTab = PreviewTab.main
 
     TabFilter(selectedTab: $selectedTab)
+        .padding()
 }
