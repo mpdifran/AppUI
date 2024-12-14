@@ -27,13 +27,12 @@ public struct TabFilter<Tab: TabFilterItem>: View where Tab.AllCases: RandomAcce
             ForEach(Tab.allCases) { tab in
                 tabView(for: tab)
                     .contentShape(Rectangle())
-                    .sensoryFeedback(.selection, trigger: selectedTab)
+                    .sensoryFeedback(.impact, trigger: selectedTab)
                     .onTapGesture {
                         selectedTab = tab
                     }
             }
         }
-        .padding()
     }
 }
 
