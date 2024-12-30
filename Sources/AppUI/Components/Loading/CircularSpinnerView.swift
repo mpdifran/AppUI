@@ -18,10 +18,12 @@ public struct CircularSpinnerView: View {
             .trim(from: 0, to: 0.7)
             .stroke(style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))
             .frame(square: 20)
+            .fixedSize()
             .rotationEffect(.degrees(isSpinning ? 360 : 0))
-            .animation(.linear(duration: 1).repeatForever(autoreverses: false), value: isSpinning)
             .onAppear {
-                isSpinning = true
+                withAnimation(.linear(duration: 1).repeatForever(autoreverses: false)) {
+                    isSpinning = true
+                }
             }
     }
 }
