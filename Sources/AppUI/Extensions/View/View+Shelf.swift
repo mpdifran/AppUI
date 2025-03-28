@@ -1,23 +1,26 @@
 //
 //  View+Shelf.swift
-//  
+//
 //
 //  Created by Mark DiFranco on 2023-11-10.
 //
 
 import SwiftUI
 
-struct ViewShelf<ShelfContent: View>: ViewModifier {
+struct ViewShelf<ShelfContent: View, S: ShapeStyle>: ViewModifier {
     private let spacing: CGFloat?
+    private let backgroundFill: S
     private let includePadding: Bool
     private let shelfContent: ShelfContent
 
     init(
         spacing: CGFloat? = nil,
+        backgroundFill: S = .bar,
         includePadding: Bool = true,
         @ViewBuilder shelfContent: () -> ShelfContent
     ) {
         self.spacing = spacing
+        self.backgroundFill = backgroundFill
         self.includePadding = includePadding
         self.shelfContent = shelfContent()
     }
@@ -34,7 +37,7 @@ struct ViewShelf<ShelfContent: View>: ViewModifier {
                 }
                 .background {
                     Rectangle()
-                        .fill(.bar)
+                        .fill(backgroundFill)
                         .edgesIgnoringSafeArea(.bottom)
                 }
             }
@@ -43,14 +46,16 @@ struct ViewShelf<ShelfContent: View>: ViewModifier {
 
 public extension View {
 
-    func shelf<ShelfContent: View>(
+    func shelf<ShelfContent: View, S: ShapeStyle>(
         spacing: CGFloat? = nil,
+        backgroundFill: S = .bar,
         includePadding: Bool = true,
         @ViewBuilder _ shelfContent: @escaping () -> ShelfContent
     ) -> some View {
         modifier(
             ViewShelf(
                 spacing: spacing,
+                backgroundFill: backgroundFill,
                 includePadding: includePadding,
                 shelfContent: shelfContent
             )
