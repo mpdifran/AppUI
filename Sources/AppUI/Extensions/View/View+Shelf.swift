@@ -15,7 +15,7 @@ struct ViewShelf<ShelfContent: View, S: ShapeStyle>: ViewModifier {
 
     init(
         spacing: CGFloat? = nil,
-        backgroundFill: S = .bar,
+        backgroundFill: S = .regularMaterial,
         includePadding: Bool = true,
         @ViewBuilder shelfContent: () -> ShelfContent
     ) {
@@ -48,7 +48,7 @@ public extension View {
 
     func shelf<ShelfContent: View, S: ShapeStyle>(
         spacing: CGFloat? = nil,
-        backgroundFill: S = .bar,
+        backgroundFill: S = .regularMaterial,
         includePadding: Bool = true,
         @ViewBuilder _ shelfContent: @escaping () -> ShelfContent
     ) -> some View {

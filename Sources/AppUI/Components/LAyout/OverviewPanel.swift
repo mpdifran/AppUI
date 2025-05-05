@@ -21,7 +21,7 @@ public extension View {
                     Spacer(minLength: 0)
                 }
                 .frame(maxWidth: maxWidth)
-                #if os(macOS)
+                #if os(macOS) || os(watchOS)
                 .background(.background.secondary)
                 #else
                 .background(Color(uiColor: .secondarySystemBackground))

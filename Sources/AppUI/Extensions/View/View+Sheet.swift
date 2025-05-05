@@ -27,6 +27,7 @@ public extension View {
         #endif
     }
 
+    #if os(iOS) || os(macOS)
     /// Presents the view as a popover.
     func popover(_ view: Binding<AnyView?>) -> some View {
         popover(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
@@ -34,14 +35,15 @@ public extension View {
         }
     }
 
-    func navigationDestination(_ view: Binding<AnyView?>) -> some View {
-        navigationDestination(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
+    func inspector(_ view: Binding<AnyView?>) -> some View {
+        inspector(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
             view.wrappedValue
         }
     }
+    #endif
 
-    func inspector(_ view: Binding<AnyView?>) -> some View {
-        inspector(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
+    func navigationDestination(_ view: Binding<AnyView?>) -> some View {
+        navigationDestination(isPresented: Binding(isNotNil: view, defaultValue: nil)) {
             view.wrappedValue
         }
     }
