@@ -26,21 +26,38 @@ struct ViewShelf<ShelfContent: View, S: ShapeStyle>: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        content
-            .safeAreaInset(edge: .bottom) {
-                VStack(spacing: spacing) {
-                    shelfContent
-                }
-                .horizontallyCentered()
-                .if(includePadding) {
-                    $0.padding()
-                }
-                .background {
-                    Rectangle()
-                        .fill(backgroundFill)
-                        .edgesIgnoringSafeArea(.bottom)
-                }
+        if #available(iOS 26.0, watchOS 26, *) {
+            GlassEffectContainer {
+                content
+                    .safeAreaInset(edge: .bottom) {
+                        VStack(spacing: spacing) {
+                            shelfContent
+                        }
+                        .horizontallyCentered()
+                        .if(includePadding) {
+                            $0.padding()
+                        }
+                        .glassEffect(in: RoundedRectangle(cornerRadius: 34))
+                        .padding(.horizontal, 8)
+                    }
             }
+        } else {
+            content
+                .safeAreaInset(edge: .bottom) {
+                    VStack(spacing: spacing) {
+                        shelfContent
+                    }
+                    .horizontallyCentered()
+                    .if(includePadding) {
+                        $0.padding()
+                    }
+                    .background {
+                        Rectangle()
+                            .fill(backgroundFill)
+                            .edgesIgnoringSafeArea(.bottom)
+                    }
+                }
+        }
     }
 }
 
